@@ -1,0 +1,59 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                            String             @id @default(cuid())
+  githubId                      String             @unique
+  username                      String
+  avatarUrl                     String?
+  githubInstallationId          String?
+  githubAccessToken             String?
+  repoOwner                     String?
+  repoName                      String             @default("daily-log")
+  timezone                      String             @default("Asia/Ho_Chi_Minh")
+  firstReminderHour             Int                @default(18) // e.g. 6 PM
+  lastReminderHour              Int                @default(22) // e.g. 10 PM
+  privateContributionsEnabled   Boolean            @default(true)
+  createdAt                     DateTime           @default(now())
+  updatedAt                     DateTime           @updatedAt
+
+  pushSubscriptions             PushSubscription[]
+  dailyLogs                     DailyLog[]
+}
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  endpoint  String   @unique
+  p256dhKey String
+  authKey   String
+  userAgent String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model DailyLog {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  logDate         String   // YYYY-MM-DD
+  content         String
+  todayContent    String?
+  learnedContent  String?
+  tomorrowContent String?
+  commitSha       String?
+  commitStatus    String   @default("success") // pending, success, failed
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([userId, logDate])
+  @@index([userId])
+}

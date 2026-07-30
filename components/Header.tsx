@@ -1,0 +1,81 @@
+'use client';
+
+import React from 'react';
+
+interface HeaderProps {
+  username: string;
+  repoName: string;
+  timezone: string;
+  onOpenLogModal: () => void;
+  onOpenOnboarding?: () => void;
+  onSync?: () => void;
+  isSyncing?: boolean;
+  onLogout?: () => void;
+}
+
+export const Header: React.FC<HeaderProps> = ({
+  username,
+  repoName,
+  timezone,
+  onOpenLogModal,
+  onOpenOnboarding,
+  onSync,
+  isSyncing = false,
+  onLogout,
+}) => {
+  return (
+    <header className="border-b border-line bg-surface px-4 sm:px-6 py-3">
+      <div className="max-w-5xl mx-auto flex items-center justify-between gap-4">
+        <div>
+          <h1 className="text-sm font-semibold text-text-primary">
+            GitHub Streak Companion
+          </h1>
+          <p className="text-xs text-text-muted mt-0.5">
+            @{username} · {repoName} · {timezone}
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {onSync && (
+            <button
+              type="button"
+              onClick={onSync}
+              disabled={isSyncing}
+              className="hidden sm:inline-flex rounded-pill border border-line px-3 py-1.5 text-xs text-text-muted hover:text-text-primary disabled:opacity-50"
+            >
+              {isSyncing ? 'Syncing...' : 'Sync'}
+            </button>
+          )}
+
+          {onOpenOnboarding && (
+            <button
+              type="button"
+              onClick={onOpenOnboarding}
+              className="hidden sm:inline-flex rounded-pill border border-line px-3 py-1.5 text-xs text-text-muted hover:text-text-primary transition-colors"
+            >
+              Setup
+            </button>
+          )}
+
+          <button
+            type="button"
+            onClick={onOpenLogModal}
+            className="rounded-pill border border-line px-3 py-1.5 text-xs text-text-primary hover:bg-surface-raised transition-colors"
+          >
+            Write log
+          </button>
+
+          {onLogout && (
+            <button
+              type="button"
+              onClick={onLogout}
+              className="rounded-pill border border-line px-3 py-1.5 text-xs text-text-muted hover:text-text-primary transition-colors"
+            >
+              Sign out
+            </button>
+          )}
+        </div>
+      </div>
+    </header>
+  );
+};

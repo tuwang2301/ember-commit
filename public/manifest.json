@@ -1,0 +1,24 @@
+{
+  "name": "GitHub Streak Companion",
+  "short_name": "StreakCompanion",
+  "description": "Never break your GitHub contribution streak again with genuine daily logs",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0C0F14",
+  "theme_color": "#0C0F14",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
