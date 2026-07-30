@@ -16,6 +16,7 @@ interface NotificationControlProps {
 }
 
 export const NotificationControl: React.FC<NotificationControlProps> = ({
+  timezone,
   firstReminderHour,
   lastReminderHour,
   privateContributionsEnabled,
@@ -212,6 +213,37 @@ export const NotificationControl: React.FC<NotificationControlProps> = ({
               }
               className="w-full accent-status-critical"
             />
+          </div>
+
+          <div>
+            <div className="flex justify-between text-text-muted mb-1">
+              <span>Timezone</span>
+              <button
+                type="button"
+                onClick={() => {
+                  const browserTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                  if (browserTz) onUpdateSettings({ timezone: browserTz });
+                }}
+                className="text-[11px] text-status-safe hover:underline font-mono"
+              >
+                Auto-detect
+              </button>
+            </div>
+            <select
+              value={timezone}
+              onChange={(e) => onUpdateSettings({ timezone: e.target.value })}
+              className="w-full rounded-md bg-surface-raised border border-line p-1.5 text-xs text-text-primary font-mono focus:outline-none focus:border-status-safe"
+            >
+              <option value="Australia/Sydney">Australia/Sydney (AEST/AEDT)</option>
+              <option value="Australia/Melbourne">Australia/Melbourne</option>
+              <option value="Australia/Brisbane">Australia/Brisbane</option>
+              <option value="Australia/Perth">Australia/Perth</option>
+              <option value="Asia/Ho_Chi_Minh">Asia/Ho_Chi_Minh (ICT)</option>
+              <option value="UTC">UTC</option>
+              <option value="America/New_York">America/New_York (EST/EDT)</option>
+              <option value="America/Los_Angeles">America/Los_Angeles (PST/PDT)</option>
+              <option value="Europe/London">Europe/London (GMT/BST)</option>
+            </select>
           </div>
 
           <label className="flex items-center justify-between pt-2 border-t border-line cursor-pointer">

@@ -46,14 +46,19 @@ export const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
 
   const weeks = useMemo(() => {
     const today = new Date();
+    // Ensure end date covers the end of the current week so today is included
     const endSunday = startOfWeekSunday(today);
+    // Include the current week by setting cursor to endSunday + 7 days
+    const currentWeekEnd = new Date(endSunday);
+    currentWeekEnd.setDate(currentWeekEnd.getDate() + 7);
+
     const startDate = new Date(endSunday);
     startDate.setDate(startDate.getDate() - 7 * 52);
 
     const columns: { date: Date; day: DayContribution | null }[][] = [];
     let cursor = new Date(startDate);
 
-    while (cursor <= endSunday) {
+    while (cursor < currentWeekEnd) {
       const week: { date: Date; day: DayContribution | null }[] = [];
       for (let i = 0; i < 7; i++) {
         const date = new Date(cursor);
