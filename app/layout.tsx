@@ -16,14 +16,14 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'GitHub Streak Companion',
+  title: 'Ember Commit | Real Daily Micro-Journaling',
   description:
-    'Protect your GitHub contribution streak with meaningful daily log entries.',
+    'A high-end SaaS companion app to protect your GitHub contribution streak with meaningful daily log entries.',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'Streak Companion',
+    title: 'Ember Commit',
   },
 };
 

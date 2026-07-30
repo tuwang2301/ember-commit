@@ -1,7 +1,7 @@
 // Service Worker for GitHub Streak Companion Web Push & Mobile PWA
 self.addEventListener('push', function (event) {
   let data = {
-    title: '🔥 GitHub Streak Warning!',
+    title: '🔥 Ember Commit Warning!',
     body: 'You have zero contributions logged for today. Tap to write a 30s daily log and save your streak!',
     url: '/?action=open-log-modal',
     tag: 'streak-warning',

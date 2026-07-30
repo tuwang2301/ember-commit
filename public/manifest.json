@@ -1,6 +1,6 @@
 {
-  "name": "GitHub Streak Companion",
-  "short_name": "StreakCompanion",
+  "name": "Ember Commit",
+  "short_name": "EmberCommit",
   "description": "Never break your GitHub contribution streak again with genuine daily logs",
   "start_url": "/",
   "display": "standalone",

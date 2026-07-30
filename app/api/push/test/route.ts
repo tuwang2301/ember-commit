@@ -29,7 +29,7 @@ export async function POST() {
           keys: { p256dh: sub.p256dhKey, auth: sub.authKey },
         },
         {
-          title: 'Streak check-in test',
+          title: '🔥 Live Push Test: Ember Commit',
           body: 'Push notifications are working. Tap to write a log.',
           url: '/?action=open-log-modal',
           urgency: 'high',

@@ -48,7 +48,7 @@ export async function POST(request: Request) {
       tomorrow || ''
     );
     const filePath = `logs/${targetDate}.md`;
-    const commitMessage = `docs(log): record daily log for ${targetDate} [via StreakCompanion]`;
+    const commitMessage = `docs(log): record daily log for ${targetDate} [via EmberCommit]`;
 
     const existingLog = await prisma.dailyLog.findUnique({
       where: {

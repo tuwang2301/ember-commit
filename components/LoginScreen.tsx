@@ -12,11 +12,10 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ authError }) => {
       <div className="w-full max-w-md space-y-8 text-center">
         <div className="space-y-2">
           <h1 className="text-2xl font-semibold text-text-primary">
-            GitHub Streak Companion
+            Ember Commit
           </h1>
           <p className="text-sm text-text-muted leading-relaxed">
-            Sign in with GitHub, install the app on your daily-log repo, and get
-            reminders before your streak breaks.
+            Protect your GitHub contribution streak with meaningful daily micro-journal entries.
           </p>
         </div>
 
