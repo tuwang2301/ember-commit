@@ -58,8 +58,9 @@ export async function GET(request: Request) {
     }
 
     return NextResponse.redirect(`${appUrl}/`);
-  } catch (err) {
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'oauth_failed';
     console.error('[GitHub OAuth Callback Error]:', err);
-    return NextResponse.redirect(`${appUrl}/?auth_error=oauth_failed`);
+    return NextResponse.redirect(`${appUrl}/?auth_error=${encodeURIComponent(message)}`);
   }
 }

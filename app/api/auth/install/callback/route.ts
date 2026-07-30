@@ -47,8 +47,9 @@ export async function GET(request: Request) {
     });
 
     return NextResponse.redirect(`${appUrl}/?onboarding=1`);
-  } catch (err) {
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'install_failed';
     console.error('[Install Callback Error]:', err);
-    return NextResponse.redirect(`${appUrl}/?auth_error=install_failed`);
+    return NextResponse.redirect(`${appUrl}/?auth_error=${encodeURIComponent(message)}`);
   }
 }
