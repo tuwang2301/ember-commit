@@ -32,17 +32,27 @@ export async function GET(request: Request) {
   }
 
   try {
-    const repos = await listInstallationRepositories(installationId);
-    const targetRepo =
-      repos.find((r) => r.name === 'daily-log') ||
-      repos[0];
+    // 1. Always update installation ID first
+    let targetRepoName = 'daily-log';
+    let targetRepoOwner: string | undefined = undefined;
+
+    try {
+      const repos = await listInstallationRepositories(installationId);
+      const targetRepo = repos.find((r) => r.name === 'daily-log') || repos[0];
+      if (targetRepo) {
+        targetRepoName = targetRepo.name;
+        targetRepoOwner = targetRepo.owner.login;
+      }
+    } catch (repoErr) {
+      console.warn('[Install Callback Repo Fetch Warning]:', repoErr);
+    }
 
     await prisma.user.update({
       where: { id: userId },
       data: {
         githubInstallationId: installationId,
-        repoOwner: targetRepo?.owner.login ?? undefined,
-        repoName: targetRepo?.name ?? 'daily-log',
+        ...(targetRepoOwner ? { repoOwner: targetRepoOwner } : {}),
+        repoName: targetRepoName,
       },
     });
 
