@@ -28,7 +28,10 @@ function startOfWeekSunday(date: Date): Date {
 }
 
 function formatDateKey(date: Date): string {
-  return date.toISOString().split('T')[0];
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
 }
 
 export const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
@@ -140,7 +143,7 @@ export const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
                     const key = formatDateKey(date);
                     const level = day?.level ?? 0;
                     const isToday = key === todayDateStr;
-                    const isFuture = date > new Date();
+                    const isFuture = key > todayDateStr;
 
                     if (isFuture) {
                       return (
@@ -162,9 +165,8 @@ export const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
                         onMouseLeave={() => setHoveredDay(null)}
                         onFocus={() => day && setHoveredDay(day)}
                         onBlur={() => setHoveredDay(null)}
-                        className={`h-[13px] w-[13px] rounded-sm cursor-pointer transition-colors duration-200 ease-out ${LEVEL_CLASS[level]} ${
-                          isToday && animateToday ? 'animate-cell-fill' : ''
-                        }`}
+                        className={`h-[13px] w-[13px] rounded-sm cursor-pointer transition-colors duration-200 ease-out ${LEVEL_CLASS[level]} ${isToday && animateToday ? 'animate-cell-fill' : ''
+                          }`}
                       />
                     );
                   })}
