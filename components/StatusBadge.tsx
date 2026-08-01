@@ -20,12 +20,16 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
   const cfg = STATUS_CONFIG[status];
 
   return (
-    <span className="inline-flex items-center gap-2 rounded-pill bg-surface-raised border border-line px-3 py-1.5 text-sm text-text-primary">
-      <span
-        className="h-2 w-2 shrink-0 rounded-full"
-        style={{ backgroundColor: cfg.dotColor }}
-        aria-hidden
-      />
+    <span className="inline-flex items-center gap-2 rounded-pill bg-surface-raised border border-line px-3.5 py-1.5 text-sm font-semibold text-text-primary">
+      {status === 'SAFE' ? (
+        <img src="/logo.png" alt="Ember Flame" className="h-4 w-4 object-contain animate-pulse" />
+      ) : (
+        <span
+          className="h-2 w-2 shrink-0 rounded-full"
+          style={{ backgroundColor: cfg.dotColor }}
+          aria-hidden
+        />
+      )}
       {cfg.label}
     </span>
   );
