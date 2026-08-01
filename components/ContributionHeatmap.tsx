@@ -1,6 +1,4 @@
-'use client';
-
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useRef, useEffect } from 'react';
 import { DayContribution } from '@/lib/streak';
 
 interface ContributionHeatmapProps {
@@ -40,6 +38,13 @@ export const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
   animateToday = false,
 }) => {
   const [hoveredDay, setHoveredDay] = useState<DayContribution | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollLeft = scrollContainerRef.current.scrollWidth;
+    }
+  }, [contributions]);
 
   const contribMap = useMemo(() => {
     const map = new Map<string, DayContribution>();
@@ -109,7 +114,7 @@ export const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
         </div>
       </div>
 
-      <div className="overflow-x-auto pb-1">
+      <div ref={scrollContainerRef} className="overflow-x-auto pb-1">
         <div className="inline-flex flex-col gap-1 min-w-max">
           <div className="flex gap-[3px] pl-8">
             {monthMarkers.map(({ idx, label }) => (
