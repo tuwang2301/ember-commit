@@ -1,6 +1,6 @@
-'use client';
-
 import React from 'react';
+import Image from 'next/image';
+import logoImg from '@/public/logo.png';
 import { NotificationControl } from './NotificationControl';
 
 interface MobileSidebarProps {
@@ -53,7 +53,7 @@ export const MobileSidebar: React.FC<MobileSidebarProps> = ({
           {/* Header */}
           <div className="flex items-center justify-between border-b border-line pb-4">
             <div className="flex items-center gap-2">
-              <img src="/logo.png" alt="Ember Commit" className="h-6 w-6 object-contain" />
+              <Image src={logoImg} alt="Ember Commit" width={24} height={24} className="h-6 w-6 object-contain" priority />
               <span className="font-semibold text-text-primary text-sm uppercase tracking-wide">
                 Ember Commit
               </span>

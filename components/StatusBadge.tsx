@@ -1,6 +1,6 @@
-'use client';
-
 import React from 'react';
+import Image from 'next/image';
+import logoImg from '@/public/logo.png';
 import { StreakStatus } from '@/lib/streak';
 
 interface StatusBadgeProps {
@@ -22,7 +22,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
   return (
     <span className="inline-flex items-center gap-2 rounded-pill bg-surface-raised border border-line px-3.5 py-1.5 text-sm font-semibold text-text-primary">
       {status === 'SAFE' ? (
-        <img src="/logo.png" alt="Ember Flame" className="h-4 w-4 object-contain animate-pulse" />
+        <Image src={logoImg} alt="Ember Flame" width={16} height={16} className="h-4 w-4 object-contain animate-pulse" />
       ) : (
         <span
           className="h-2 w-2 shrink-0 rounded-full"
