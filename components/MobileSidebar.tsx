@@ -82,7 +82,7 @@ export const MobileSidebar: React.FC<MobileSidebarProps> = ({
             </div>
           </div>
 
-          {/* Quick Actions */}
+          {/* Quick Navigation Links */}
           <div className="space-y-2">
             <button
               type="button"
@@ -90,24 +90,40 @@ export const MobileSidebar: React.FC<MobileSidebarProps> = ({
                 onOpenLogModal();
                 onClose();
               }}
-              className="w-full rounded-pill bg-status-safe px-4 py-2 text-xs font-semibold text-ink transition-transform active:scale-[0.98]"
+              className="w-full rounded-pill bg-status-safe px-4 py-2.5 text-xs font-semibold text-ink transition-transform active:scale-[0.98] flex items-center justify-center gap-2"
             >
-              + Write Daily Log
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              <span>Write Daily Log</span>
             </button>
 
-            <button
-              type="button"
-              onClick={() => {
-                onToggleView();
-                onClose();
-              }}
-              className="w-full rounded-pill border border-line bg-surface-raised px-4 py-2 text-xs font-medium text-text-primary hover:bg-line transition-colors flex items-center justify-between"
+            <a
+              href="/"
+              onClick={onClose}
+              className="w-full rounded-pill border border-line bg-surface-raised px-4 py-2 text-xs font-medium text-text-primary hover:bg-line transition-colors flex items-center gap-2"
             >
-              <span>View Mode</span>
-              <span className="font-mono text-[11px] text-status-safe">
-                {isPublicView ? 'Public Portfolio' : 'In-App Workspace'}
-              </span>
-            </button>
+              <span>🏠</span>
+              <span>Dashboard Home</span>
+            </a>
+
+            <a
+              href="/settings"
+              onClick={onClose}
+              className="w-full rounded-pill border border-line bg-surface-raised px-4 py-2 text-xs font-medium text-text-primary hover:bg-line transition-colors flex items-center gap-2"
+            >
+              <span>⚙️</span>
+              <span>Settings & Notifications</span>
+            </a>
+
+            <a
+              href="/portfolio"
+              onClick={onClose}
+              className="w-full rounded-pill border border-line bg-surface-raised px-4 py-2 text-xs font-medium text-text-primary hover:bg-line transition-colors flex items-center gap-2"
+            >
+              <span>💼</span>
+              <span>Public Portfolio View</span>
+            </a>
 
             {onSync && (
               <button
@@ -117,22 +133,10 @@ export const MobileSidebar: React.FC<MobileSidebarProps> = ({
                   onClose();
                 }}
                 disabled={isSyncing}
-                className="w-full rounded-pill border border-line px-4 py-2 text-xs text-text-muted hover:text-text-primary disabled:opacity-50 text-left"
+                className="w-full rounded-pill border border-line px-4 py-2 text-xs text-text-muted hover:text-text-primary disabled:opacity-50 text-left flex items-center gap-2"
               >
-                {isSyncing ? 'Syncing...' : '↻ Sync GitHub Data'}
-              </button>
-            )}
-
-            {onOpenOnboarding && (
-              <button
-                type="button"
-                onClick={() => {
-                  onOpenOnboarding();
-                  onClose();
-                }}
-                className="w-full rounded-pill border border-line px-4 py-2 text-xs text-text-muted hover:text-text-primary text-left"
-              >
-                ⚙ Setup Wizard
+                <span>↻</span>
+                <span>{isSyncing ? 'Syncing...' : 'Sync GitHub Data'}</span>
               </button>
             )}
           </div>

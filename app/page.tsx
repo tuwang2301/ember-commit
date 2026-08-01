@@ -226,14 +226,6 @@ export default function DashboardPage() {
             daysProtected={metrics?.daysProtected || 0}
           />
 
-          <NotificationControl
-            timezone={user?.timezone || 'Asia/Ho_Chi_Minh'}
-            firstReminderHour={user?.firstReminderHour || 18}
-            lastReminderHour={user?.lastReminderHour || 22}
-            privateContributionsEnabled={user?.privateContributionsEnabled ?? true}
-            onUpdateSettings={handleUpdateSettings}
-          />
-
           <RecentLogsList
             logs={recentLogs || []}
             repoName={user?.repoName || 'daily-log'}
