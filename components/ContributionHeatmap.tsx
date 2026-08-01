@@ -10,11 +10,11 @@ interface ContributionHeatmapProps {
 }
 
 const LEVEL_CLASS: Record<0 | 1 | 2 | 3 | 4, string> = {
-  0: 'bg-grid-l0',
-  1: 'bg-grid-l1',
-  2: 'bg-grid-l2',
-  3: 'bg-grid-l3',
-  4: 'bg-grid-l4',
+  0: 'bg-grid-l0 border border-[#272b3c]',
+  1: 'bg-grid-l1 border border-[#6b252b]',
+  2: 'bg-grid-l2 border border-[#9e343c]',
+  3: 'bg-grid-l3 border border-[#d94852]',
+  4: 'bg-grid-l4 border border-[#ff6666]',
 };
 
 const MONTH_LABELS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

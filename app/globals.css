@@ -10,15 +10,15 @@
   --text-primary: #e8eaed;
   --text-muted: #8b92a3;
 
-  --grid-l0: #161b22;
-  --grid-l1: #0e4429;
-  --grid-l2: #006d32;
-  --grid-l3: #26a641;
-  --grid-l4: #39d353;
+  --grid-l0: #1c1f2b;
+  --grid-l1: #591f24;
+  --grid-l2: #8c2e35;
+  --grid-l3: #c4414a;
+  --grid-l4: #ef5b5b;
 
-  --status-safe: #5fd1b0;
+  --status-safe: #ef5b5b;
   --status-at-risk: #f2a93b;
-  --status-critical: #ef5b5b;
+  --status-critical: #d93838;
 }
 
 body {
