@@ -9,6 +9,8 @@ import { NotificationControl } from '@/components/NotificationControl';
 import { RecentLogsList } from '@/components/RecentLogsList';
 import { QuickLogModal } from '@/components/QuickLogModal';
 import { OnboardingFlow } from '@/components/OnboardingFlow';
+import { MobileSidebar } from '@/components/MobileSidebar';
+import { PublicPortfolioView } from '@/components/PublicPortfolioView';
 import { LoginScreen } from '@/components/LoginScreen';
 import { InstallRequiredScreen } from '@/components/InstallRequiredScreen';
 import { DayContribution } from '@/lib/streak';
@@ -57,6 +59,8 @@ export default function DashboardPage() {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLogModalOpen, setIsLogModalOpen] = useState(false);
   const [isOnboardingOpen, setIsOnboardingOpen] = useState(false);
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [isPublicView, setIsPublicView] = useState(false);
   const [animateTodayCell, setAnimateTodayCell] = useState(false);
 
   const fetchDashboardData = useCallback(async (showRefreshSpinner = false) => {
@@ -184,46 +188,69 @@ export default function DashboardPage() {
         onSync={() => fetchDashboardData(true)}
         isSyncing={isRefreshing}
         onLogout={handleLogout}
+        onOpenMobileMenu={() => setIsMobileSidebarOpen(true)}
       />
 
-      <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-8 space-y-8">
-        <StreakStatusCard
-          status={metrics?.status || 'SAFE'}
-          hasContributedToday={metrics?.hasContributedToday || false}
-          todayDateStr={metrics?.todayDateStr || new Date().toISOString().split('T')[0]}
-          hoursRemainingToday={metrics?.hoursRemainingToday || 6}
-          onOpenLogModal={() => setIsLogModalOpen(true)}
-        />
-
-        <ContributionHeatmap
-          contributions={contributions || []}
-          todayDateStr={metrics?.todayDateStr || new Date().toISOString().split('T')[0]}
-          animateToday={animateTodayCell}
-        />
-
-        <MetricsGrid
+      {isPublicView ? (
+        <PublicPortfolioView
+          username={user?.username || ''}
+          repoName={user?.repoName || 'daily-log'}
+          timezone={user?.timezone || 'Asia/Ho_Chi_Minh'}
           currentStreak={metrics?.currentStreak || 0}
           longestStreak={metrics?.longestStreak || 0}
           totalLogs={metrics?.totalLogs || 0}
-          daysProtected={metrics?.daysProtected || 0}
+          contributions={contributions || []}
+          recentLogs={recentLogs || []}
+          onSwitchToApp={() => setIsPublicView(false)}
         />
+      ) : (
+        <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-8 space-y-8">
+          <StreakStatusCard
+            status={metrics?.status || 'SAFE'}
+            hasContributedToday={metrics?.hasContributedToday || false}
+            todayDateStr={metrics?.todayDateStr || new Date().toISOString().split('T')[0]}
+            hoursRemainingToday={metrics?.hoursRemainingToday || 6}
+            onOpenLogModal={() => setIsLogModalOpen(true)}
+          />
 
-        <NotificationControl
-          timezone={user?.timezone || 'Asia/Ho_Chi_Minh'}
-          firstReminderHour={user?.firstReminderHour || 18}
-          lastReminderHour={user?.lastReminderHour || 22}
-          privateContributionsEnabled={user?.privateContributionsEnabled ?? true}
-          onUpdateSettings={handleUpdateSettings}
-        />
+          <ContributionHeatmap
+            contributions={contributions || []}
+            todayDateStr={metrics?.todayDateStr || new Date().toISOString().split('T')[0]}
+            animateToday={animateTodayCell}
+          />
 
-        <RecentLogsList
-          logs={recentLogs || []}
-          repoName={user?.repoName || 'daily-log'}
-        />
-      </main>
+          <MetricsGrid
+            currentStreak={metrics?.currentStreak || 0}
+            longestStreak={metrics?.longestStreak || 0}
+            totalLogs={metrics?.totalLogs || 0}
+            daysProtected={metrics?.daysProtected || 0}
+          />
 
-      <footer className="border-t border-line py-4 text-center text-xs text-text-muted">
-        GitHub Streak Companion · {user?.repoName || 'daily-log'}
+          <NotificationControl
+            timezone={user?.timezone || 'Asia/Ho_Chi_Minh'}
+            firstReminderHour={user?.firstReminderHour || 18}
+            lastReminderHour={user?.lastReminderHour || 22}
+            privateContributionsEnabled={user?.privateContributionsEnabled ?? true}
+            onUpdateSettings={handleUpdateSettings}
+          />
+
+          <RecentLogsList
+            logs={recentLogs || []}
+            repoName={user?.repoName || 'daily-log'}
+          />
+        </main>
+      )}
+
+      <footer className="border-t border-line py-4 text-center text-xs text-text-muted flex items-center justify-center gap-3">
+        <span>Ember Commit · {user?.repoName || 'daily-log'}</span>
+        <span>·</span>
+        <button
+          type="button"
+          onClick={() => setIsPublicView(!isPublicView)}
+          className="hover:text-text-primary underline"
+        >
+          {isPublicView ? 'Back to App Workspace' : 'Preview Public Portfolio'}
+        </button>
       </footer>
 
       <QuickLogModal
@@ -244,6 +271,25 @@ export default function DashboardPage() {
         timezone={user?.timezone || 'Asia/Ho_Chi_Minh'}
         privateContributionsEnabled={user?.privateContributionsEnabled ?? true}
         currentStreak={metrics?.currentStreak || 0}
+        onUpdateSettings={handleUpdateSettings}
+      />
+
+      <MobileSidebar
+        isOpen={isMobileSidebarOpen}
+        onClose={() => setIsMobileSidebarOpen(false)}
+        username={user?.username || ''}
+        repoName={user?.repoName || 'daily-log'}
+        timezone={user?.timezone || 'Asia/Ho_Chi_Minh'}
+        firstReminderHour={user?.firstReminderHour || 18}
+        lastReminderHour={user?.lastReminderHour || 22}
+        privateContributionsEnabled={user?.privateContributionsEnabled ?? true}
+        isPublicView={isPublicView}
+        onToggleView={() => setIsPublicView(!isPublicView)}
+        onOpenLogModal={() => setIsLogModalOpen(true)}
+        onOpenOnboarding={() => setIsOnboardingOpen(true)}
+        onSync={() => fetchDashboardData(true)}
+        isSyncing={isRefreshing}
+        onLogout={handleLogout}
         onUpdateSettings={handleUpdateSettings}
       />
     </div>

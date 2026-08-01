@@ -11,6 +11,7 @@ interface HeaderProps {
   onSync?: () => void;
   isSyncing?: boolean;
   onLogout?: () => void;
+  onOpenMobileMenu?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -22,6 +23,7 @@ export const Header: React.FC<HeaderProps> = ({
   onSync,
   isSyncing = false,
   onLogout,
+  onOpenMobileMenu,
 }) => {
   return (
     <header className="border-b border-line bg-surface px-4 sm:px-6 py-3">
@@ -33,7 +35,7 @@ export const Header: React.FC<HeaderProps> = ({
               Ember Commit
             </h1>
             <p className="text-xs text-text-muted mt-0.5">
-              @{username} · {repoName} · {timezone}
+              @{username} · <span className="hidden xs:inline">{repoName} · </span>{timezone}
             </p>
           </div>
         </div>
@@ -72,9 +74,22 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               type="button"
               onClick={onLogout}
-              className="rounded-pill border border-line px-3 py-1.5 text-xs text-text-muted hover:text-text-primary transition-colors"
+              className="hidden sm:inline-flex rounded-pill border border-line px-3 py-1.5 text-xs text-text-muted hover:text-text-primary transition-colors"
             >
               Sign out
+            </button>
+          )}
+
+          {onOpenMobileMenu && (
+            <button
+              type="button"
+              onClick={onOpenMobileMenu}
+              aria-label="Open Mobile Menu"
+              className="sm:hidden p-1.5 rounded-md border border-line text-text-muted hover:text-text-primary hover:bg-surface-raised transition-colors"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
             </button>
           )}
         </div>
