@@ -20,6 +20,10 @@ export const metadata: Metadata = {
   description:
     'A high-end SaaS companion app to protect your GitHub contribution streak with meaningful daily log entries.',
   manifest: '/manifest.json',
+  icons: {
+    icon: '/logo.png',
+    apple: '/logo.png',
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',

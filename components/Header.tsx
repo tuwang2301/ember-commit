@@ -26,13 +26,16 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="border-b border-line bg-surface px-4 sm:px-6 py-3">
       <div className="max-w-5xl mx-auto flex items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <h1 className="text-sm font-semibold text-text-primary uppercase tracking-wide">
-            Ember Commit
-          </h1>
-          <p className="text-xs text-text-muted mt-0.5">
-            @{username} · {repoName} · {timezone}
-          </p>
+        <div className="flex items-center gap-2.5">
+          <img src="/logo.png" alt="Ember Commit" className="h-6 w-6 object-contain" />
+          <div>
+            <h1 className="text-sm font-semibold text-text-primary uppercase tracking-wide">
+              Ember Commit
+            </h1>
+            <p className="text-xs text-text-muted mt-0.5">
+              @{username} · {repoName} · {timezone}
+            </p>
+          </div>
         </div>
 
         <div className="flex items-center gap-2">
