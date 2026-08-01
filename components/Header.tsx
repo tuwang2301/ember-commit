@@ -1,6 +1,7 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
-import logoImg from '@/public/logo.png';
 
 interface HeaderProps {
   username: string;
@@ -29,7 +30,7 @@ export const Header: React.FC<HeaderProps> = ({
     <header className="border-b border-line bg-surface px-4 sm:px-6 py-3">
       <div className="max-w-5xl mx-auto flex items-center justify-between gap-4">
         <div className="flex items-center gap-2.5">
-          <Image src={logoImg} alt="Ember Commit" width={24} height={24} className="h-6 w-6 object-contain" priority />
+          <Image src="/logo.png" alt="Ember Commit" width={24} height={24} className="h-6 w-6 object-contain" priority />
           <h1 className="text-sm font-semibold text-text-primary uppercase tracking-wide">
             Ember Commit
           </h1>

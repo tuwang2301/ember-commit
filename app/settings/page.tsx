@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import logoImg from '@/public/logo.png';
 import { NotificationControl } from '@/components/NotificationControl';
 
 interface UserSettings {
@@ -72,7 +71,7 @@ export default function SettingsPage() {
       <header className="border-b border-line bg-surface px-4 sm:px-6 py-3">
         <div className="max-w-5xl mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-2.5">
-            <Image src={logoImg} alt="Ember Commit" width={24} height={24} className="h-6 w-6 object-contain" priority />
+            <Image src="/logo.png" alt="Ember Commit" width={24} height={24} className="h-6 w-6 object-contain" priority />
             <h1 className="text-sm font-semibold text-text-primary uppercase tracking-wide">
               Ember Commit Settings
             </h1>
