@@ -284,6 +284,21 @@ export default function DashboardPage() {
         onLogout={handleLogout}
         onUpdateSettings={handleUpdateSettings}
       />
+
+      {/* Mobile Floating Action Button (FAB) for Write Log */}
+      {!isPublicView && (
+        <button
+          type="button"
+          onClick={() => setIsLogModalOpen(true)}
+          aria-label="Write Daily Log"
+          className="sm:hidden fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-pill bg-status-safe text-ink px-4 py-3 font-semibold text-xs shadow-xl active:scale-95 transition-transform"
+        >
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+          </svg>
+          <span>Write log</span>
+        </button>
+      )}
     </div>
   );
 }
