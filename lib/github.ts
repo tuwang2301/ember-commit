@@ -37,21 +37,31 @@ export async function commitDailyLogToGitHub(
 
   const contentEncoded = Buffer.from(content, 'utf-8').toString('base64');
 
-  const response = await octokit.rest.repos.createOrUpdateFileContents({
-    owner: repoOwner,
-    repo: repoName,
-    path: filePath,
-    message,
-    content: contentEncoded,
-    sha,
-  });
+  try {
+    const response = await octokit.rest.repos.createOrUpdateFileContents({
+      owner: repoOwner,
+      repo: repoName,
+      path: filePath,
+      message,
+      content: contentEncoded,
+      sha,
+    });
 
-  return {
-    sha: response.data.content?.sha || `sha_${Date.now()}`,
-    url:
-      response.data.content?.html_url ||
-      `https://github.com/${repoOwner}/${repoName}/blob/main/${filePath}`,
-  };
+    return {
+      sha: response.data.content?.sha || `sha_${Date.now()}`,
+      url:
+        response.data.content?.html_url ||
+        `https://github.com/${repoOwner}/${repoName}/blob/main/${filePath}`,
+    };
+  } catch (err: unknown) {
+    const errObj = err as { status?: number; message?: string };
+    if (errObj.status === 404 || errObj.message?.includes('Not Found')) {
+      throw new Error(
+        `Repository "${repoOwner}/${repoName}" was not found on GitHub. Please create repository "${repoName}" at https://github.com/new and re-install the GitHub App on it.`
+      );
+    }
+    throw err;
+  }
 }
 
 /**

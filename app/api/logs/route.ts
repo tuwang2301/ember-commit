@@ -87,7 +87,8 @@ export async function POST(request: Request) {
       });
     }
 
-    let commitResult;
+    let commitResult: { sha: string; url: string } | undefined;
+    let commitErrorMsg: string | null = null;
     try {
       commitResult = await commitDailyLogToGitHub({
         repoOwner: repoOwner,
@@ -106,6 +107,7 @@ export async function POST(request: Request) {
         },
       });
     } catch (err) {
+      commitErrorMsg = err instanceof Error ? err.message : 'GitHub Commit Failed';
       console.error('[Commit Error]:', err);
       logEntry = await prisma.dailyLog.update({
         where: { id: logEntry.id },
@@ -114,10 +116,11 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json({
-      success: true,
+      success: commitErrorMsg === null,
       log: logEntry,
       commitSha: commitResult?.sha,
       commitUrl: commitResult?.url,
+      commitError: commitErrorMsg,
     });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Failed to submit log';
