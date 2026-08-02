@@ -14,11 +14,26 @@ export function getAppUrl(): string {
   return 'http://localhost:3000';
 }
 
+export function parsePrivateKey(raw?: string): string | undefined {
+  if (!raw) return undefined;
+  let key = raw.trim();
+
+  // Remove surrounding double quotes or single quotes if present
+  if ((key.startsWith('"') && key.endsWith('"')) || (key.startsWith("'") && key.endsWith("'"))) {
+    key = key.slice(1, -1).trim();
+  }
+
+  // Replace literal escaped newlines with actual newline characters
+  key = key.replace(/\\n/g, '\n').replace(/\r\n/g, '\n');
+
+  return key;
+}
+
 export function getGitHubAppConfig() {
   const appId = process.env.GITHUB_APP_ID;
   const clientId = process.env.GITHUB_CLIENT_ID;
   const clientSecret = process.env.GITHUB_CLIENT_SECRET;
-  const privateKey = process.env.GITHUB_PRIVATE_KEY?.replace(/\\n/g, '\n');
+  const privateKey = parsePrivateKey(process.env.GITHUB_PRIVATE_KEY);
   const appSlug = process.env.GITHUB_APP_SLUG;
 
   return { appId, clientId, clientSecret, privateKey, appSlug };
