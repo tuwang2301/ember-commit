@@ -47,11 +47,13 @@ export async function GET(request: Request) {
       console.warn('[Install Callback Repo Fetch Warning]:', repoErr);
     }
 
+    const dbUser = await prisma.user.findUnique({ where: { id: userId } });
+
     await prisma.user.update({
       where: { id: userId },
       data: {
         githubInstallationId: installationId,
-        ...(targetRepoOwner ? { repoOwner: targetRepoOwner } : {}),
+        repoOwner: targetRepoOwner || dbUser?.username || 'user',
         repoName: targetRepoName,
       },
     });

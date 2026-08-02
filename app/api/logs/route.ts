@@ -26,12 +26,14 @@ export async function POST(request: Request) {
     const user = await getAuthenticatedUser();
     if (!user) return unauthorizedResponse();
 
-    if (!user.githubInstallationId || !user.repoOwner) {
+    if (!user.githubInstallationId) {
       return NextResponse.json(
         { error: 'GitHub App is not installed on a repository yet.' },
         { status: 400 }
       );
     }
+
+    const repoOwner = user.repoOwner || user.username;
 
     const body = await request.json();
     const { today, learned, tomorrow, logDate } = body;
@@ -88,7 +90,7 @@ export async function POST(request: Request) {
     let commitResult;
     try {
       commitResult = await commitDailyLogToGitHub({
-        repoOwner: user.repoOwner,
+        repoOwner: repoOwner,
         repoName: user.repoName || 'daily-log',
         installationId: user.githubInstallationId,
         filePath,
