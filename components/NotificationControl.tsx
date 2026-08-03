@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { Bell, Send, Clock, Globe, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 interface NotificationControlProps {
   timezone: string;
@@ -99,7 +100,7 @@ export const NotificationControl: React.FC<NotificationControlProps> = ({
         throw new Error('Failed to register subscription on server');
       }
 
-      setTestStatusMessage('Push notifications enabled.');
+      setTestStatusMessage('Push notifications successfully enabled.');
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Push registration failed';
       setTestStatusMessage(message);
@@ -117,7 +118,7 @@ export const NotificationControl: React.FC<NotificationControlProps> = ({
       if (!res.ok) {
         throw new Error(data.error || 'Test push failed');
       }
-      setTestStatusMessage(`Test push sent to ${data.sentCount} device(s).`);
+      setTestStatusMessage(`Test push notification sent to ${data.sentCount} device(s).`);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Could not send test push';
       setTestStatusMessage(message);
@@ -127,64 +128,79 @@ export const NotificationControl: React.FC<NotificationControlProps> = ({
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-      <div className="lg:col-span-2 rounded-md border border-line bg-surface p-4 space-y-4">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      {/* Web Push Notification Settings */}
+      <div className="lg:col-span-2 rounded-md border border-line bg-surface p-5 space-y-4">
         <div className="flex items-center justify-between border-b border-line pb-3">
-          <div>
-            <h3 className="text-sm font-semibold text-text-primary">Push notifications</h3>
-            <p className="text-xs text-text-muted mt-0.5">
-              Permission: {permissionState}
-            </p>
+          <div className="flex items-center gap-2">
+            <Bell className="w-4 h-4 text-status-safe" />
+            <h3 className="text-sm font-semibold text-text-primary">Web Push Notifications</h3>
           </div>
+          <span className="text-xs font-mono text-text-muted bg-surface-raised px-2.5 py-1 rounded-sm border border-line">
+            Status: {permissionState}
+          </span>
         </div>
+
+        <p className="text-xs text-text-muted leading-relaxed">
+          Receive automated browser push alerts when your daily streak is about to break before end-of-day.
+        </p>
 
         {isIOS && !isStandalone && (
           <p className="text-xs text-text-muted rounded-md border border-line bg-surface-raised p-3">
-            On iPhone, add this app to your Home Screen first, then enable push.
+            On iOS Safari, tap Share → &quot;Add to Home Screen&quot; first to enable Web Push notifications.
           </p>
         )}
 
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2.5 pt-1">
           <button
             type="button"
             onClick={handleEnablePush}
             disabled={isSubscribing}
-            className="rounded-pill border border-line px-3.5 py-1.5 text-xs text-text-primary hover:bg-surface-raised disabled:opacity-50"
+            className="rounded-pill border border-line bg-surface-raised px-4 py-2 text-xs font-medium text-text-primary hover:bg-line disabled:opacity-50 flex items-center gap-2 transition-colors"
           >
-            {isSubscribing
-              ? 'Enabling...'
-              : permissionState === 'granted'
-                ? 'Re-sync subscription'
-                : 'Enable push'}
+            <Bell className="w-3.5 h-3.5 text-status-safe" />
+            <span>
+              {isSubscribing
+                ? 'Enabling...'
+                : permissionState === 'granted'
+                  ? 'Re-sync Subscription'
+                  : 'Enable Push Alerts'}
+            </span>
           </button>
 
           <button
             type="button"
             onClick={handleTestPush}
             disabled={isSendingTest}
-            className="rounded-pill border border-line px-3.5 py-1.5 text-xs text-text-muted hover:text-text-primary disabled:opacity-50"
+            className="rounded-pill border border-line px-4 py-2 text-xs font-medium text-text-muted hover:text-text-primary disabled:opacity-50 flex items-center gap-2 transition-colors"
           >
-            {isSendingTest ? 'Sending...' : 'Send test'}
+            <Send className="w-3.5 h-3.5" />
+            <span>{isSendingTest ? 'Sending...' : 'Send Test Notification'}</span>
           </button>
         </div>
 
         {testStatusMessage && (
-          <p className="text-xs text-text-muted rounded-md border border-line bg-surface-raised p-2.5">
-            {testStatusMessage}
-          </p>
+          <div className="text-xs font-mono text-text-muted rounded-md border border-line bg-surface-raised p-3 flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-status-safe shrink-0" />
+            <span>{testStatusMessage}</span>
+          </div>
         )}
       </div>
 
-      <div className="rounded-md border border-line bg-surface p-4 space-y-3">
-        <h3 className="text-sm font-semibold text-text-primary border-b border-line pb-2">
-          Reminder hours
-        </h3>
+      {/* Reminder Schedule & Timezone */}
+      <div className="rounded-md border border-line bg-surface p-5 space-y-4">
+        <div className="flex items-center gap-2 border-b border-line pb-3">
+          <Clock className="w-4 h-4 text-status-safe" />
+          <h3 className="text-sm font-semibold text-text-primary">
+            Schedule & Timezone
+          </h3>
+        </div>
 
-        <div className="space-y-3 text-xs">
+        <div className="space-y-4 text-xs">
           <div>
-            <div className="flex justify-between text-text-muted mb-1">
+            <div className="flex justify-between text-text-muted mb-1.5 font-mono">
               <span>First reminder</span>
-              <span className="font-mono text-text-primary">{firstReminderHour}:00</span>
+              <span className="text-text-primary font-bold">{firstReminderHour}:00</span>
             </div>
             <input
               type="range"
@@ -199,9 +215,9 @@ export const NotificationControl: React.FC<NotificationControlProps> = ({
           </div>
 
           <div>
-            <div className="flex justify-between text-text-muted mb-1">
+            <div className="flex justify-between text-text-muted mb-1.5 font-mono">
               <span>Last reminder</span>
-              <span className="font-mono text-status-critical">{lastReminderHour}:00</span>
+              <span className="text-status-critical font-bold">{lastReminderHour}:00</span>
             </div>
             <input
               type="range"
@@ -216,8 +232,11 @@ export const NotificationControl: React.FC<NotificationControlProps> = ({
           </div>
 
           <div>
-            <div className="flex justify-between text-text-muted mb-1">
-              <span>Timezone</span>
+            <div className="flex justify-between text-text-muted mb-1.5 font-mono">
+              <span className="flex items-center gap-1">
+                <Globe className="w-3 h-3" />
+                <span>Timezone</span>
+              </span>
               <button
                 type="button"
                 onClick={() => {
@@ -232,7 +251,7 @@ export const NotificationControl: React.FC<NotificationControlProps> = ({
             <select
               value={timezone}
               onChange={(e) => onUpdateSettings({ timezone: e.target.value })}
-              className="w-full rounded-md bg-surface-raised border border-line p-1.5 text-xs text-text-primary font-mono focus:outline-none focus:border-status-safe"
+              className="w-full rounded-md bg-surface-raised border border-line p-2 text-xs text-text-primary font-mono focus:outline-none focus:border-status-safe"
             >
               <option value="Australia/Sydney">Australia/Sydney (AEST/AEDT)</option>
               <option value="Australia/Melbourne">Australia/Melbourne</option>
@@ -246,8 +265,11 @@ export const NotificationControl: React.FC<NotificationControlProps> = ({
             </select>
           </div>
 
-          <label className="flex items-center justify-between pt-2 border-t border-line cursor-pointer">
-            <span className="text-text-muted">Private contributions on GitHub</span>
+          <label className="flex items-center justify-between pt-3 border-t border-line cursor-pointer">
+            <span className="text-text-muted flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-text-muted" />
+              <span>Include Private Repos</span>
+            </span>
             <input
               type="checkbox"
               checked={privateContributionsEnabled}
