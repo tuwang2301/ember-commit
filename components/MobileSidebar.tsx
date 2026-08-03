@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { NotificationControl } from './NotificationControl';
+import Link from 'next/link';
+import { X, Plus, LayoutDashboard, Settings, Briefcase, RefreshCw, LogOut } from 'lucide-react';
 
 interface MobileSidebarProps {
   isOpen: boolean;
@@ -10,17 +11,10 @@ interface MobileSidebarProps {
   username: string;
   repoName: string;
   timezone: string;
-  firstReminderHour: number;
-  lastReminderHour: number;
-  privateContributionsEnabled: boolean;
-  isPublicView: boolean;
-  onToggleView: () => void;
   onOpenLogModal: () => void;
-  onOpenOnboarding?: () => void;
   onSync?: () => void;
   isSyncing?: boolean;
   onLogout?: () => void;
-  onUpdateSettings: (settings: Record<string, unknown>) => void;
 }
 
 export const MobileSidebar: React.FC<MobileSidebarProps> = ({
@@ -29,22 +23,15 @@ export const MobileSidebar: React.FC<MobileSidebarProps> = ({
   username,
   repoName,
   timezone,
-  firstReminderHour,
-  lastReminderHour,
-  privateContributionsEnabled,
-  isPublicView,
-  onToggleView,
   onOpenLogModal,
-  onOpenOnboarding,
   onSync,
   isSyncing = false,
   onLogout,
-  onUpdateSettings,
 }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-ink/80 backdrop-blur-sm sm:hidden transition-opacity">
+    <div className="fixed inset-0 z-50 flex justify-end bg-ink/80 backdrop-blur-sm md:hidden transition-opacity">
       {/* Backdrop overlay click */}
       <div className="flex-1" onClick={onClose} />
 
@@ -62,18 +49,16 @@ export const MobileSidebar: React.FC<MobileSidebarProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="p-1 rounded-md text-text-muted hover:text-text-primary hover:bg-surface-raised"
+              className="p-1 rounded-md text-text-muted hover:text-text-primary hover:bg-surface-raised transition-colors"
             >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* User Profile Info */}
           <div className="rounded-md border border-line bg-surface-raised p-3 flex items-center gap-3">
-            <div className="h-9 w-9 rounded-full bg-status-safe/20 border border-status-safe flex items-center justify-center text-status-safe font-mono font-bold text-sm uppercase">
-              {username.slice(0, 2)}
+            <div className="h-9 w-9 rounded-full bg-status-safe/20 border border-status-safe flex items-center justify-center text-status-safe font-mono font-bold text-sm uppercase shrink-0">
+              {username.slice(0, 2) || 'EC'}
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-xs font-semibold text-text-primary truncate">@{username}</p>
@@ -93,38 +78,36 @@ export const MobileSidebar: React.FC<MobileSidebarProps> = ({
               }}
               className="w-full rounded-pill bg-status-safe px-4 py-2.5 text-xs font-semibold text-ink transition-transform active:scale-[0.98] flex items-center justify-center gap-2"
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
+              <Plus className="w-4 h-4" />
               <span>Write Daily Log</span>
             </button>
 
-            <a
+            <Link
               href="/"
               onClick={onClose}
-              className="w-full rounded-pill border border-line bg-surface-raised px-4 py-2 text-xs font-medium text-text-primary hover:bg-line transition-colors flex items-center gap-2"
+              className="w-full rounded-pill border border-line bg-surface-raised px-4 py-2.5 text-xs font-medium text-text-primary hover:bg-line transition-colors flex items-center gap-2.5"
             >
-              <span>🏠</span>
+              <LayoutDashboard className="w-4 h-4 text-status-safe" />
               <span>Dashboard Home</span>
-            </a>
+            </Link>
 
-            <a
+            <Link
               href="/settings"
               onClick={onClose}
-              className="w-full rounded-pill border border-line bg-surface-raised px-4 py-2 text-xs font-medium text-text-primary hover:bg-line transition-colors flex items-center gap-2"
+              className="w-full rounded-pill border border-line bg-surface-raised px-4 py-2.5 text-xs font-medium text-text-primary hover:bg-line transition-colors flex items-center gap-2.5"
             >
-              <span>⚙️</span>
-              <span>Settings & Notifications</span>
-            </a>
+              <Settings className="w-4 h-4 text-text-muted" />
+              <span>Settings & Reminders</span>
+            </Link>
 
-            <a
+            <Link
               href="/portfolio"
               onClick={onClose}
-              className="w-full rounded-pill border border-line bg-surface-raised px-4 py-2 text-xs font-medium text-text-primary hover:bg-line transition-colors flex items-center gap-2"
+              className="w-full rounded-pill border border-line bg-surface-raised px-4 py-2.5 text-xs font-medium text-text-primary hover:bg-line transition-colors flex items-center gap-2.5"
             >
-              <span>💼</span>
+              <Briefcase className="w-4 h-4 text-text-muted" />
               <span>Public Portfolio View</span>
-            </a>
+            </Link>
 
             {onSync && (
               <button
@@ -134,26 +117,12 @@ export const MobileSidebar: React.FC<MobileSidebarProps> = ({
                   onClose();
                 }}
                 disabled={isSyncing}
-                className="w-full rounded-pill border border-line px-4 py-2 text-xs text-text-muted hover:text-text-primary disabled:opacity-50 text-left flex items-center gap-2"
+                className="w-full rounded-pill border border-line px-4 py-2.5 text-xs text-text-muted hover:text-text-primary disabled:opacity-50 text-left flex items-center gap-2.5 transition-colors"
               >
-                <span>↻</span>
+                <RefreshCw className={`w-4 h-4 ${isSyncing ? 'animate-spin' : ''}`} />
                 <span>{isSyncing ? 'Syncing...' : 'Sync GitHub Data'}</span>
               </button>
             )}
-          </div>
-
-          {/* Settings Section */}
-          <div className="space-y-3 pt-3 border-t border-line">
-            <h4 className="text-xs font-semibold text-text-primary uppercase tracking-wider">
-              Settings & Reminders
-            </h4>
-            <NotificationControl
-              timezone={timezone}
-              firstReminderHour={firstReminderHour}
-              lastReminderHour={lastReminderHour}
-              privateContributionsEnabled={privateContributionsEnabled}
-              onUpdateSettings={onUpdateSettings}
-            />
           </div>
         </div>
 
@@ -166,9 +135,10 @@ export const MobileSidebar: React.FC<MobileSidebarProps> = ({
                 onLogout();
                 onClose();
               }}
-              className="w-full rounded-pill border border-status-critical/30 bg-status-critical/10 px-4 py-2 text-xs font-medium text-status-critical hover:bg-status-critical/20 transition-colors"
+              className="w-full rounded-pill border border-status-critical/30 bg-status-critical/10 px-4 py-2.5 text-xs font-medium text-status-critical hover:bg-status-critical/20 transition-colors flex items-center justify-center gap-2"
             >
-              Sign out
+              <LogOut className="w-4 h-4" />
+              <span>Sign out</span>
             </button>
           </div>
         )}
