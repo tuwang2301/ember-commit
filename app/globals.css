@@ -16,9 +16,9 @@
   --grid-l3: #c4414a;
   --grid-l4: #ef5b5b;
 
-  --status-safe: #ef5b5b;
-  --status-at-risk: #f2a93b;
-  --status-critical: #d93838;
+  --status-safe: #10b981;
+  --status-at-risk: #f59e0b;
+  --status-critical: #ef4444;
 }
 
 body {
