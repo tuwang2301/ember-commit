@@ -272,17 +272,10 @@ export default function DashboardPage() {
         username={user?.username || ''}
         repoName={user?.repoName || 'daily-log'}
         timezone={user?.timezone || 'Asia/Ho_Chi_Minh'}
-        firstReminderHour={user?.firstReminderHour || 18}
-        lastReminderHour={user?.lastReminderHour || 22}
-        privateContributionsEnabled={user?.privateContributionsEnabled ?? true}
-        isPublicView={isPublicView}
-        onToggleView={() => setIsPublicView(!isPublicView)}
         onOpenLogModal={() => setIsLogModalOpen(true)}
-        onOpenOnboarding={() => setIsOnboardingOpen(true)}
         onSync={() => fetchDashboardData(true)}
         isSyncing={isRefreshing}
         onLogout={handleLogout}
-        onUpdateSettings={handleUpdateSettings}
       />
 
       {/* Mobile Floating Action Button (FAB) for Write Log */}
