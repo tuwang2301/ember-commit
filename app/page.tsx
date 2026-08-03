@@ -13,6 +13,7 @@ import { MobileSidebar } from '@/components/MobileSidebar';
 import { PublicPortfolioView } from '@/components/PublicPortfolioView';
 import { LoginScreen } from '@/components/LoginScreen';
 import { InstallRequiredScreen } from '@/components/InstallRequiredScreen';
+import { Plus } from 'lucide-react';
 import { DayContribution } from '@/lib/streak';
 
 interface DashboardData {
@@ -284,11 +285,9 @@ export default function DashboardPage() {
           type="button"
           onClick={() => setIsLogModalOpen(true)}
           aria-label="Write Daily Log"
-          className="sm:hidden fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-pill bg-status-safe text-ink px-4 py-3 font-semibold text-xs shadow-xl active:scale-95 transition-transform"
+          className="md:hidden fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-pill bg-status-safe text-ink px-4 py-3 font-semibold text-xs active:scale-95 transition-transform"
         >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
-          </svg>
+          <Plus className="w-4 h-4 stroke-[2.5]" />
           <span>Write log</span>
         </button>
       )}
