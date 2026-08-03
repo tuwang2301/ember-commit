@@ -1,37 +1,36 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
+import { ShieldCheck, AlertTriangle, Flame } from 'lucide-react';
 import { StreakStatus } from '@/lib/streak';
 
 interface StatusBadgeProps {
   status: StreakStatus;
 }
 
-const STATUS_CONFIG: Record<
-  StreakStatus,
-  { label: string; dotColor: string }
-> = {
-  SAFE: { label: 'Safe', dotColor: 'var(--status-safe)' },
-  AT_RISK: { label: 'At Risk', dotColor: 'var(--status-at-risk)' },
-  CRITICAL: { label: 'Critical', dotColor: 'var(--status-critical)' },
-};
-
 export const StatusBadge: React.FC<StatusBadgeProps> = ({ status }) => {
-  const cfg = STATUS_CONFIG[status];
+  if (status === 'SAFE') {
+    return (
+      <span className="inline-flex items-center gap-2 rounded-pill bg-status-safe/10 border border-status-safe/30 px-3.5 py-1.5 text-xs font-semibold text-status-safe font-mono uppercase tracking-wider">
+        <ShieldCheck className="w-4 h-4 text-status-safe" />
+        <span>Streak Safe</span>
+      </span>
+    );
+  }
+
+  if (status === 'AT_RISK') {
+    return (
+      <span className="inline-flex items-center gap-2 rounded-pill bg-status-at-risk/10 border border-status-at-risk/30 px-3.5 py-1.5 text-xs font-semibold text-status-at-risk font-mono uppercase tracking-wider">
+        <AlertTriangle className="w-4 h-4 text-status-at-risk" />
+        <span>Streak At Risk</span>
+      </span>
+    );
+  }
 
   return (
-    <span className="inline-flex items-center gap-2 rounded-pill bg-surface-raised border border-line px-3.5 py-1.5 text-sm font-semibold text-text-primary">
-      {status === 'SAFE' ? (
-        <Image src="/logo.png" alt="Ember Flame" width={16} height={16} className="h-4 w-4 object-contain animate-pulse" />
-      ) : (
-        <span
-          className="h-2 w-2 shrink-0 rounded-full"
-          style={{ backgroundColor: cfg.dotColor }}
-          aria-hidden
-        />
-      )}
-      {cfg.label}
+    <span className="inline-flex items-center gap-2 rounded-pill bg-status-critical/10 border border-status-critical/30 px-3.5 py-1.5 text-xs font-semibold text-status-critical font-mono uppercase tracking-wider">
+      <Flame className="w-4 h-4 text-status-critical" />
+      <span>Streak Critical</span>
     </span>
   );
 };
