@@ -13,6 +13,7 @@ import { MobileSidebar } from '@/components/MobileSidebar';
 import { PublicPortfolioView } from '@/components/PublicPortfolioView';
 import { LoginScreen } from '@/components/LoginScreen';
 import { InstallRequiredScreen } from '@/components/InstallRequiredScreen';
+import { DashboardSkeleton } from '@/components/DashboardSkeleton';
 import { Plus } from 'lucide-react';
 import { DayContribution } from '@/lib/streak';
 
@@ -160,12 +161,7 @@ export default function DashboardPage() {
   };
 
   if (authState === 'loading') {
-    return (
-      <div className="min-h-[100dvh] bg-ink flex flex-col items-center justify-center gap-2">
-        <div className="h-3 w-3 rounded-sm bg-grid-l2 animate-pulse" />
-        <p className="text-xs text-text-muted">Loading...</p>
-      </div>
-    );
+    return <DashboardSkeleton />;
   }
 
   if (authState === 'guest') {
