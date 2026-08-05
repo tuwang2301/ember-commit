@@ -66,7 +66,7 @@ export const PublicPortfolioView: React.FC<PublicPortfolioViewProps> = ({
             <Flame className="w-4 h-4 text-status-safe" />
             <span>{currentStreak} Day Verified Contribution Streak</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold font-serif text-text-primary tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-bold font-serif text-text-primary tracking-tight [text-wrap:balance]">
             @{username}&apos;s Public Engineering Journal
           </h1>
           <p className="text-sm text-text-muted max-w-xl mx-auto leading-relaxed">

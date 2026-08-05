@@ -92,8 +92,8 @@ export default function SettingsPage() {
       <main className="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-8 space-y-8">
         <div className="space-y-2 border-b border-line pb-4 flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-bold text-text-primary">Settings & Reminders</h2>
-            <p className="text-xs text-text-muted">
+            <h2 className="text-xl font-bold text-text-primary [text-wrap:balance]">Settings & Reminders</h2>
+            <p className="text-xs text-text-muted mt-0.5">
               Configure your notification schedule, timezone, and GitHub repository integration.
             </p>
           </div>

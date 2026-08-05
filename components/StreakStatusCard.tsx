@@ -50,7 +50,7 @@ export const StreakStatusCard: React.FC<StreakStatusCardProps> = ({
           )}
         </div>
 
-        <p className="text-sm text-text-primary leading-relaxed">
+        <p className="text-sm text-text-primary leading-relaxed [text-wrap:balance]">
           {getMessage()}
         </p>
       </div>
