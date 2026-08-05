@@ -165,12 +165,13 @@ export const ContributionHeatmap: React.FC<ContributionHeatmapProps> = ({
                         key={key}
                         role="gridcell"
                         tabIndex={0}
+                        title={`${key}: ${day?.count ?? 0} contribution${(day?.count ?? 0) === 1 ? '' : 's'}`}
                         aria-label={`${key}: ${day?.count ?? 0} contributions`}
                         onMouseEnter={() => day && setHoveredDay(day)}
                         onMouseLeave={() => setHoveredDay(null)}
                         onFocus={() => day && setHoveredDay(day)}
                         onBlur={() => setHoveredDay(null)}
-                        className={`h-[13px] w-[13px] rounded-sm cursor-pointer transition-colors duration-200 ease-out ${LEVEL_CLASS[level]} ${isToday && animateToday ? 'animate-cell-fill' : ''
+                        className={`h-[13px] w-[13px] rounded-sm cursor-pointer transition-colors duration-150 ease-out focus-visible:ring-1 focus-visible:ring-status-safe focus-visible:outline-none ${LEVEL_CLASS[level]} ${isToday && animateToday ? 'animate-cell-fill' : ''
                           }`}
                       />
                     );
