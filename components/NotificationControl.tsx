@@ -210,7 +210,7 @@ export const NotificationControl: React.FC<NotificationControlProps> = ({
               onChange={(e) =>
                 onUpdateSettings({ firstReminderHour: parseInt(e.target.value) })
               }
-              className="w-full accent-status-safe"
+              className="w-full accent-status-safe cursor-pointer focus-visible:ring-1 focus-visible:ring-status-safe rounded"
             />
           </div>
 
@@ -227,7 +227,7 @@ export const NotificationControl: React.FC<NotificationControlProps> = ({
               onChange={(e) =>
                 onUpdateSettings({ lastReminderHour: parseInt(e.target.value) })
               }
-              className="w-full accent-status-critical"
+              className="w-full accent-status-critical cursor-pointer focus-visible:ring-1 focus-visible:ring-status-critical rounded"
             />
           </div>
 
