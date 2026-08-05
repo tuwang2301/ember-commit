@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  color-scheme: dark;
   --ink: #0c0f14;
   --surface: #171b23;
   --surface-raised: #1f242e;
@@ -26,10 +27,16 @@ body {
   color: var(--text-primary);
   font-family: var(--font-inter), 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
+  accent-color: var(--status-safe);
 }
 
 *, ::before, ::after {
   box-shadow: none !important;
+}
+
+:focus-visible {
+  outline: 1.5px solid var(--status-safe) !important;
+  outline-offset: 2px !important;
 }
 
 ::-webkit-scrollbar {
