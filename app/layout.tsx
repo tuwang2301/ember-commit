@@ -16,13 +16,38 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ember-commit.vercel.app'),
   title: 'Ember Commit | Real Daily Micro-Journaling',
   description:
-    'A high-end SaaS companion app to protect your GitHub contribution streak with meaningful daily log entries.',
+    'Protect your GitHub contribution streak with meaningful daily log entries committed directly to your repository.',
   manifest: '/manifest.json',
   icons: {
     icon: '/logo.png',
     apple: '/logo.png',
+  },
+  openGraph: {
+    title: 'Ember Commit | Real Daily Micro-Journaling',
+    description:
+      'Protect your GitHub contribution streak with meaningful daily log entries committed directly to your repository.',
+    url: 'https://ember-commit.vercel.app',
+    siteName: 'Ember Commit',
+    images: [
+      {
+        url: '/logo.png',
+        width: 512,
+        height: 512,
+        alt: 'Ember Commit Logo',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Ember Commit | Real Daily Micro-Journaling',
+    description:
+      'Protect your GitHub contribution streak with meaningful daily log entries committed directly to your repository.',
+    images: ['/logo.png'],
   },
   appleWebApp: {
     capable: true,
